@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{B205BEB2-E15D-463E-8F95-9AF50A3E8F46}" version="14.0">
+	<children>
+		<child name="WebComparison1" key="{5DEE6AFC-72BE-4F8F-9C7B-43BAB4D5D8CD}" type="Web Comparison" typeId="{744C6E7C-6CC3-4731-B0E1-4A58319782AC}" pluginName="Web Checkpoints" path="WebComparison1.tcWcm" />
+	</children>
+</Root>

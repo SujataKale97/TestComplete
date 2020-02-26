@@ -1,0 +1,69 @@
+﻿' Before running the test, make sure to configure your web browsers
+' as explained in the "Preparing  Web Browsers" section.
+
+Sub AlertTest
+  Dim page
+  Log.AppendFolder("Alert Test")
+  Set page = Aliases.browser.Page
+  Call page.panelPage.panelDialogbox.link.Click()
+  Call page.Alert.buttonOk.ClickButton()
+  Call page.Wait()
+  Call Log.PopLogFolder()
+End Sub
+
+Sub PromptTest()
+  Dim page, prompt
+  Call Log.AppendFolder("Prompt Test")
+  Set page = Aliases.browser.Page
+  Call page.panelPage.panelDialogbox.link1.Click()
+  Set prompt = page.Prompt
+  Call prompt.textboxValue.Keys("tester")
+  Call prompt.buttonOk.ClickButton()
+  Call aqObject.CheckProperty(page.panelPage.panelDialogbox.promptLog, "contentText", cmpEqual, "Hello tester!", false)  
+  Call page.Wait()
+  Call Log.PopLogFolder()
+End Sub
+
+Sub ConfirmTest()
+  Dim page
+  Call Log.AppendFolder("Confirm Test")
+  Set page = Aliases.browser.Page
+  Call page.panelPage.panelDialogbox.link2.Click()
+  Call page.Confirm.buttonOk.ClickButton()
+  Call aqObject.CheckProperty(page.panelPage.panelDialogbox.confirmLog, "contentText", cmpEqual, "You pressed OK!", false)
+  Call page.Wait()
+  Call Log.PopLogFolder()
+End Sub
+
+Sub OnBeforeUnloadTest()
+  Dim page, processId
+  processId = Aliases.browser.Id
+  Call Log.AppendFolder("OnBeforeUnload Test")
+  Set page = Aliases.browser.Page
+  Call page.panelPage.panelDialogbox.link3.Click()
+  Call page.Confirm.buttonCancel.ClickButton()
+  Call Aliases.browser.BrowserWindow.Close()
+  Call page.Confirm.buttonOk.ClickButton()
+  Call Log.PopLogFolder()
+  'cache process id because Edge restarts after closing
+  While Aliases.browser.Exists
+    If processId <> Aliases.browser.Id Then
+      Exit Sub
+    End If
+    Delay(1000)    
+  Wend
+End Sub
+
+Sub Main
+  Dim i
+  Call Log.Message("Found " + aqConvert.IntToStr(Browsers.Count) + " browsers:") 
+  For i = 0 To Browsers.Count - 1
+    Call Log.AppendFolder(Browsers.Item(i).Description)
+    Call Browsers.Item(i).Run("http://downloads.smartbear.com/samples/testcomplete12/dialogs/")
+    Call AlertTest()
+    Call PromptTest()
+    Call ConfirmTest()
+    Call OnBeforeUnloadTest() 
+    Call Log.PopLogFolder()
+  Next
+End Sub

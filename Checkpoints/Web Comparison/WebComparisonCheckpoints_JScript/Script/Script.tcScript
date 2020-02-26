@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="WebComparisonCheckpoints_JS" key="{E587CD94-DDC2-4AFD-9451-5C404904E006}" path="WebComparisonCheckpoints_JS.sj" />
+	</children>
+</Root>

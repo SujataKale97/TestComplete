@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="Dialogs_DS" key="{491E09C5-BEFE-4573-84EB-9DA903A595E0}" path="Dialogs_DS.sd" />
+	</children>
+</Root>

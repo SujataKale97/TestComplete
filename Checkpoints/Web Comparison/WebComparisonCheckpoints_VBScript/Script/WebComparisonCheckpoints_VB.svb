@@ -1,0 +1,20 @@
+﻿Option Explicit
+
+Sub Test(page)
+  page.Table(0).Cell(0, 0).Textbox("input1").Text = "test1"
+  page.Table(0).Cell(2, 0).Panel(0).Textbox("Input2").Text = "test2"
+  page.Table(0).Cell(0, 1).Textarea(0).value = "test3"
+  Call page.Table(0).Cell(1, 0).Label(1).Checkbox("checkbox2").Click()
+  Call page.Table(0).Cell(0, 2).Label(2).RadioButton("radiogroup1").Click()
+  Call page.Table(0).Cell(1, 1).Panel(0).Select(0).ClickItem(2)
+  Call page.Table(0).Cell(1, 2).Panel(0).Select(0).SelectItem(2)
+End Sub
+
+Sub Main
+  Dim page
+  Call Browsers.Item(btIExplorer).Run("file:///" + Project.Path + "..\MainPage.htm")
+  Set page = Aliases.browser.pageMainpageHtm
+  Call Test(page)
+  Call WebTesting.WebComparison1.Check() 
+  Call Aliases.browser.Close()
+End Sub

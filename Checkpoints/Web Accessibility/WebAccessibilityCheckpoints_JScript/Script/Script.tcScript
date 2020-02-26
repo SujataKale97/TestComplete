@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="WebAccessibilityCheckpoints_JS" key="{D6832A4D-3ABB-4626-9F2B-7DD40E042C41}" path="WebAccessibilityCheckpoints_JS.sj" />
+	</children>
+</Root>

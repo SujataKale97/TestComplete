@@ -1,0 +1,52 @@
+﻿procedure Test;
+var notepad_proc, notepad_wnd, help_proc, help_wnd, navigator, help_browser;
+begin
+  notepad_proc := Sys.Process('notepad');
+  notepad_wnd := notepad_proc.Window('Notepad', '*');
+  
+  if (aqEnvironment.GetWinMajorVersion() > 5) then
+  begin
+    notepad_wnd.MainMenu.Click('Help|View Help');
+
+    help_proc := Sys.Process('helppane');
+    help_wnd := help_proc.Window('HelpPane', 'Windows Help and Support');
+    help_browser := help_wnd.FindChildEx('WndClass', 'Internet Explorer_Server', 4, false, 10000);
+  end
+  else
+  begin
+    notepad_wnd.MainMenu.Click('Help|Help Topics');
+  
+    help_wnd := notepad_proc.Window('HH Parent', 'Notepad');
+    navigator := help_wnd.Window('HH Child', '', 2).Window('SysTabControl32');
+    navigator.ClickTab('&Contents');
+    navigator.Window('SysTreeView32').ClickItem('|Notepad|Create a header or footer');
+    help_browser := help_wnd.Window('HH Child', '', 1).Window('Shell Embedding', '', 1).Window('Shell DocObject View', '', 1).Window('Internet Explorer_Server', '', 1);
+  end;
+  
+  help_browser.Page('*').Wait();
+  WebTesting.WebAccessibility1.Check(help_browser.Page('*'));
+  
+  help_wnd.Close;
+end;
+
+procedure Main;
+begin
+  if aqEnvironment.GetWinMajorVersion() >= 10 then
+  begin
+    try
+      Browsers.Item(btEdge).Run('http://support.smartbear.com/samples/testcomplete12/WebOrders/');
+    except
+      Browsers.Item(btIExplorer).Run('http://support.smartbear.com/samples/testcomplete12/WebOrders/');
+    end;
+    Sys.Browser().Page('*/WebOrders*').Wait();
+    WebTesting.WebAccessibility1.Check(Sys.Browser().Page('*/WebOrders*'));
+    Sys.Browser().Close();
+  end
+  else
+  begin
+    TestedApps.notepad.Run;
+    Test;
+    Delay(1000);
+    TestedApps.notepad.Close;
+  end;
+end;

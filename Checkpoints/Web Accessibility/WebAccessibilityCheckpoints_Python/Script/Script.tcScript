@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="WebAccessibilityCheckpoints_Py" key="{89133A2C-310D-4AF2-9C3E-D3EC630A8D9D}" path="WebAccessibilityCheckpoints_Py.py" />
+	</children>
+</Root>

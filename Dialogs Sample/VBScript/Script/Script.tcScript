@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="Dialogs_VB" key="{C58D7B48-6B60-485A-AD7D-C2E2EB9C5EA5}" path="Dialogs_VB.svb" />
+	</children>
+</Root>

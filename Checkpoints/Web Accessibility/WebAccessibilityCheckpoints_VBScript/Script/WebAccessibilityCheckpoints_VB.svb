@@ -1,0 +1,51 @@
+﻿Option Explicit
+
+Sub Test
+  Dim notepad_proc, notepad_wnd
+  Set notepad_proc = Sys.Process("notepad")
+  Set notepad_wnd = notepad_proc.Window("Notepad", "*")
+  
+  Dim help_browser, help_wnd
+  If aqEnvironment.GetWinMajorVersion() > 5 Then  
+    Call notepad_wnd.MainMenu.Click("Help|View Help")
+    
+    Dim help_proc
+    Set help_proc = Sys.Process("helppane")
+    Set help_wnd = help_proc.Window("HelpPane", "Windows Help and Support")
+    Set help_browser = help_wnd.FindChildEx("WndClass", "Internet Explorer_Server", 4, False, 10000)
+  Else
+    Call notepad_wnd.MainMenu.Click("Help|Help Topics")
+    
+    Dim navigator
+    Set help_wnd = notepad_proc.Window("HH Parent", "Notepad")
+    Set navigator = help_wnd.Window("HH Child", "", 2).Window("SysTabControl32")
+    Call navigator.ClickTab("&Contents")
+    Call navigator.Window("SysTreeView32").ClickItem("|Notepad|Create a header or footer")
+    Set help_browser = help_wnd.Window("HH Child", "", 1).Window("Shell Embedding", "", 1).Window("Shell DocObject View", "", 1).Window("Internet Explorer_Server", "", 1)
+  End If
+  
+  Call help_browser.Page("*").Wait()
+  Call WebTesting.WebAccessibility1.Check(help_browser.Page("*"))
+  
+  Call help_wnd.Close
+End Sub
+
+Sub Main
+  If aqEnvironment.GetWinMajorVersion() >= 10 Then
+    On Error Resume Next
+    Call Browsers.Item(btEdge).Run("http://support.smartbear.com/samples/testcomplete12/WebOrders/")
+    if Err.Number <> 0 Then
+      Call Browsers.Item(btIExplorer).Run("http://support.smartbear.com/samples/testcomplete12/WebOrders/")
+      Err.Clear
+    End If
+    On Error Goto 0
+    Call Sys.Browser().Page("*/WebOrders*").Wait()
+    Call WebTesting.WebAccessibility1.Check(Sys.Browser().Page("*/WebOrders*"))
+    Call Sys.Browser().Close()
+  Else
+    Call TestedApps.notepad.Run
+    Call Test
+    Call Delay(1000)
+    Call TestedApps.notepad.Close
+  End If
+End Sub

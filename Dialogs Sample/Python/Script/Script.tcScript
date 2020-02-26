@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="Dialogs_PY" key="{4C573B35-E2FF-4BE6-A746-5A12D032F1AE}" path="Dialogs_PY.py" />
+	</children>
+</Root>
