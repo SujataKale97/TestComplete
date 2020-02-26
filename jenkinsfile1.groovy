@@ -1,4 +1,4 @@
-node("slave1")
+node("slave2")
 {
   stage('Code Clone')
   {
